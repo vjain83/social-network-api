@@ -44,7 +44,7 @@ const thoughtController = {
     addReaction({ params, body }, res) {
         Thought.findOneAndUpdate(
             { _id: params.thoughtId },
-            { $push: { reactions: body } },
+            { $addToSet: { reactions: body } },
             { new: true }
         )
             .then(dbThoughtData => {
@@ -79,7 +79,7 @@ const thoughtController = {
                     res.status(404).json({ message: 'No Thought found with this id!' });
                     return;
                 }
-                res.json(dbThoughtData);
+                res.json({ message: 'Thought has been deleted sucessfully!' });
             })
             .catch(err => res.status(400).json(err));
     },
